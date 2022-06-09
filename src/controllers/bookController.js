@@ -1,27 +1,30 @@
+
+
+
 const { count } = require("console")
-const BookModel= require("../models/bookModel")
+const BookModel= require("../models/authorModel")
+
+console.log('debugger reached to end.')
 
 const createBook= async function (req, res) {
     let data= req.body
-
     let savedData= await BookModel.create(data)
     res.send({msg: savedData})
 }
 
-const getBooksData= async function (req, res) {
+const getBooksData= async function (_req, res) {
+
     let allBooks= await BookModel.find( {authorName : "HO" } )
     console.log(allBooks)
+    // watch(allBooks)  
     if (allBooks.length > 0 )  res.send({msg: allBooks, condition: true})
     else res.send({msg: "No books found" , condition: false})
 }
 
+console.log("knkjjkjk"+ getBooksData)
 
 const updateBooks= async function (req, res) {
-    let data = req.body // {sales: "1200"}
-    // let allBooks= await BookModel.updateMany( 
-    //     { author: "SK"} , //condition
-    //     { $set: data } //update in data
-    //  )
+    let data = req.body 
     let allBooks= await BookModel.findOneAndUpdate( 
         { authorName: "ABC"} , //condition
         { $set: data }, //update in data
@@ -31,8 +34,8 @@ const updateBooks= async function (req, res) {
      res.send( { msg: allBooks})
 }
 
-const deleteBooks= async function (req, res) {
-    // let data = req.body 
+const deleteBooks= async function (_req, res) {
+    
     let allBooks= await BookModel.updateMany( 
         { authorName: "FI"} , //condition
         { $set: {isDeleted: true} }, //update in data
@@ -41,7 +44,6 @@ const deleteBooks= async function (req, res) {
      
      res.send( { msg: allBooks})
 }
-
 
 
 
